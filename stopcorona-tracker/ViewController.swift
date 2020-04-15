@@ -9,11 +9,18 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController, CBCentralManagerDelegate {
+struct ScannedPeripheral {
+    let name: String
+    let rssi: Int
+}
+
+class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var peripherals: [ScannedPeripheral] = [ScannedPeripheral]() //model
     var cbManager: CBCentralManager?
+    let cbuuid = CBUUID(string: "00000000-0000-2a34-6561-35396137667e"); //stopcorona UUID
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +35,16 @@ class ViewController: UIViewController, CBCentralManagerDelegate {
             print("BLE powered off")
         case .poweredOn:
             print("BLE powered on")
-            cbManager?.scanForPeripherals(withServices: nil, options: nil) // UUID?????
+            
+            self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)
+            
+            /*
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                self.cbManager?.stopScan()
+                self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)
+            }
+            */
+            
         case .resetting:
             print("BLE resetting")
         case .unauthorized:
@@ -41,7 +57,27 @@ class ViewController: UIViewController, CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        if let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+            let scanned = ScannedPeripheral(name: localName, rssi: RSSI.intValue)
+            
+            peripherals.append(scanned)
+            tableView.reloadData()
+        }
+    }
+    
+    // Mark: UITableViewDataSource
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return peripherals.count;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
+        cell.textLabel?.text = peripherals[indexPath.row].name
+        cell.detailTextLabel?.text = "\(peripherals[indexPath.row].rssi)"
+        
+        return cell
     }
 }
 
