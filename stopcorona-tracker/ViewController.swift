@@ -10,8 +10,8 @@ import UIKit
 import CoreBluetooth
 
 struct ScannedPeripheral {
-    let name: String
-    let rssi: Int
+    var name: String
+    var rssi: Int
 }
 
 class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDataSource {
@@ -36,7 +36,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
         case .poweredOn:
             print("BLE powered on")
             
-            self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)
+            self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
             
             /*
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
@@ -60,7 +60,14 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
         if let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             let scanned = ScannedPeripheral(name: localName, rssi: RSSI.intValue)
             
-            peripherals.append(scanned)
+            if let index = peripherals.firstIndex(where: { $0.name == scanned.name} ) {
+                peripherals[index].rssi = scanned.rssi
+                
+                tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                return;
+            }
+            
+            peripherals.append(scanned) //add filtering due to continuios scanning
             tableView.reloadData()
         }
     }
