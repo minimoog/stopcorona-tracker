@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B317EA072448B4F100162776 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B317EA062448B4F100162776 /* LocationManager.swift */; };
 		CD26B3C12444B4D100D387A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26B3C02444B4D100D387A2 /* AppDelegate.swift */; };
 		CD26B3C32444B4D100D387A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26B3C22444B4D100D387A2 /* SceneDelegate.swift */; };
 		CD26B3C52444B4D100D387A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26B3C42444B4D100D387A2 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B317EA062448B4F100162776 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CD26B3BD2444B4D100D387A2 /* stopcorona-tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stopcorona-tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD26B3C02444B4D100D387A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD26B3C22444B4D100D387A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				CD26B3C02444B4D100D387A2 /* AppDelegate.swift */,
 				CD26B3C22444B4D100D387A2 /* SceneDelegate.swift */,
 				CD26B3C42444B4D100D387A2 /* ViewController.swift */,
+				B317EA062448B4F100162776 /* LocationManager.swift */,
 				CD26B3C62444B4D100D387A2 /* Main.storyboard */,
 				CD26B3C92444B4D200D387A2 /* Assets.xcassets */,
 				CD26B3CB2444B4D200D387A2 /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B317EA072448B4F100162776 /* LocationManager.swift in Sources */,
 				CD26B3C52444B4D100D387A2 /* ViewController.swift in Sources */,
 				CD26B3C12444B4D100D387A2 /* AppDelegate.swift in Sources */,
 				CD26B3C32444B4D100D387A2 /* SceneDelegate.swift in Sources */,
@@ -297,7 +301,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9XA2D6V342;
+				DEVELOPMENT_TEAM = RBN8A648SA;
 				INFOPLIST_FILE = "stopcorona-tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -315,7 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9XA2D6V342;
+				DEVELOPMENT_TEAM = RBN8A648SA;
 				INFOPLIST_FILE = "stopcorona-tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
