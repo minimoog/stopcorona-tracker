@@ -8,10 +8,12 @@
 
 import UIKit
 import CoreBluetooth
+import MapKit
 
 struct ScannedPeripheral {
     var name: String
     var rssi: Int
+    //var location: CLLocation
 }
 
 class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDataSource {
@@ -22,11 +24,20 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
     var cbManager: CBCentralManager?
     let cbuuid = CBUUID(string: "00000000-0000-2a34-6561-35396137667e"); //stopcorona UUID
     
+    var currentLocationLatitude: Float!
+    var currentLocationLongitude: Float!
+    var currentLocation: CLLocation!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         cbManager = CBCentralManager(delegate: self, queue: nil)
+        
+        LocationManager.shared.getLocationWithCompletionHandler { (location) in
+            guard let location = location else { return }
+            self.currentLocation = location
+            print("\(self.currentLocation.debugDescription)")
+        }
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -58,8 +69,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+            //let scanned = ScannedPeripheral(name: localName, rssi: RSSI.intValue, location: self.currentLocation)
             let scanned = ScannedPeripheral(name: localName, rssi: RSSI.intValue)
-            
             if let index = peripherals.firstIndex(where: { $0.name == scanned.name} ) {
                 peripherals[index].rssi = scanned.rssi
                 
