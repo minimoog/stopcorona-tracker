@@ -14,6 +14,12 @@ struct ScannedPeripheral {
     var rssi: Int
 }
 
+extension Data {
+    func hexEncodedString() -> String {
+        return map { String(format: "%02hhx", $0) }.joined()
+    }
+}
+
 class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
@@ -36,12 +42,13 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
         case .poweredOn:
             print("BLE powered on")
             
-            self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
+            self.cbManager?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
             
             /*
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                 self.cbManager?.stopScan()
-                self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)
+             
+                self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)ѐѐѐѐ
             }
             */
             
@@ -57,18 +64,70 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UITableViewDat
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            let scanned = ScannedPeripheral(name: localName, rssi: RSSI.intValue)
-            
-            if let index = peripherals.firstIndex(where: { $0.name == scanned.name} ) {
-                peripherals[index].rssi = scanned.rssi
-                
-                tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-                return;
+        
+        let ff01 = CBUUID(string: "FF01")
+        let dataServiceUUID = CBUUID(string: "FFAA")
+        
+        if let services = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+            if services.contains(ff01) {
+                if services.contains(where: { cbuuid in
+                    let uuidString = cbuuid.uuidString
+                    
+                    // 00000000-0000-2A34-6561-35396137667E
+                    if uuidString.contains("00000000-0000-2A") {
+                        return true
+                    }
+                    
+                    return false
+                }) {
+                    //ios
+                    
+                    if let coronaid = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+                        print("ios coronaid: \(coronaid)")
+                        
+                        //make a function:
+                        let scanned = ScannedPeripheral(name: coronaid, rssi: RSSI.intValue)
+                        if let index = peripherals.firstIndex(where: { $0.name == scanned.name} ) {
+                            peripherals[index].rssi = scanned.rssi
+                            
+                            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                            return;
+                        }
+                        
+                        peripherals.append(scanned) //add filtering due to continuios scanning
+                        tableView.reloadData()
+                        ///
+                    }
+                    
+                } else {
+                    //android
+                    
+                    if let dataServices = advertisementData[CBAdvertisementDataServiceDataKey] as? [CBUUID: Data],
+                        let data = dataServices[dataServiceUUID] {
+                        
+                        var coronaid = String(decoding: data, as: UTF8.self)
+                        
+                        if coronaid.first == "~" {
+                            coronaid.remove(at: coronaid.startIndex)
+                            
+                            print("android coronaid: \(coronaid)")
+                            
+                            //make a function:
+                            let scanned = ScannedPeripheral(name: coronaid, rssi: RSSI.intValue)
+                            if let index = peripherals.firstIndex(where: { $0.name == scanned.name} ) {
+                                peripherals[index].rssi = scanned.rssi
+                                
+                                tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                                return;
+                            }
+                            
+                            peripherals.append(scanned) //add filtering due to continuios scanning
+                            tableView.reloadData()
+                            ///
+                        }
+                    }
+                }
             }
-            
-            peripherals.append(scanned) //add filtering due to continuios scanning
-            tableView.reloadData()
         }
     }
     
