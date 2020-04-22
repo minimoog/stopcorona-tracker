@@ -14,6 +14,7 @@
 		CD26B3CA2444B4D200D387A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD26B3C92444B4D200D387A2 /* Assets.xcassets */; };
 		CD26B3CD2444B4D200D387A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD26B3CB2444B4D200D387A2 /* LaunchScreen.storyboard */; };
 		CD26B3D62444B9CF00D387A2 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD26B3D52444B9CF00D387A2 /* CoreBluetooth.framework */; };
+		CD7C1CA8245090A600449F52 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7C1CA7245090A600449F52 /* Tracker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		CD26B3CC2444B4D200D387A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD26B3CE2444B4D200D387A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD26B3D52444B9CF00D387A2 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		CD7C1CA7245090A600449F52 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				CD26B3C92444B4D200D387A2 /* Assets.xcassets */,
 				CD26B3CB2444B4D200D387A2 /* LaunchScreen.storyboard */,
 				CD26B3CE2444B4D200D387A2 /* Info.plist */,
+				CD7C1CA7245090A600449F52 /* Tracker.swift */,
 			);
 			path = "stopcorona-tracker";
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD7C1CA8245090A600449F52 /* Tracker.swift in Sources */,
 				CD26B3C52444B4D100D387A2 /* ViewController.swift in Sources */,
 				CD26B3C12444B4D100D387A2 /* AppDelegate.swift in Sources */,
 				CD26B3C32444B4D100D387A2 /* SceneDelegate.swift in Sources */,
