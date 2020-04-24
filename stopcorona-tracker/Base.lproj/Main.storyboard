@@ -19,29 +19,39 @@
                                 <rect key="frame" x="20" y="44" width="374" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="asv-BI-vdD" detailTextLabel="EUP-D6-GQ3" style="IBUITableViewCellStyleValue1" id="4nI-hA-C4i">
-                                        <rect key="frame" x="0.0" y="28" width="374" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="42" id="4nI-hA-C4i" customClass="Cell" customModule="stopcorona_tracker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4nI-hA-C4i" id="4gQ-pQ-aHm">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="asv-BI-vdD">
-                                                    <rect key="frame" x="20" y="12" width="33.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZg-Ee-zzz">
+                                                    <rect key="frame" x="20" y="11" width="17" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EUP-D6-GQ3">
-                                                    <rect key="frame" x="310" y="12" width="44" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RSSI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m34-Du-gNc">
+                                                    <rect key="frame" x="318" y="11" width="36" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="m34-Du-gNc" secondAttribute="bottom" constant="10" id="EtE-kT-KwV"/>
+                                                <constraint firstAttribute="trailing" secondItem="m34-Du-gNc" secondAttribute="trailing" constant="20" id="JwN-A3-rUB"/>
+                                                <constraint firstAttribute="bottom" secondItem="fZg-Ee-zzz" secondAttribute="bottom" constant="10" id="KI4-ju-c3T"/>
+                                                <constraint firstItem="fZg-Ee-zzz" firstAttribute="top" secondItem="4gQ-pQ-aHm" secondAttribute="top" constant="11" id="ZH4-6v-NE3"/>
+                                                <constraint firstItem="fZg-Ee-zzz" firstAttribute="leading" secondItem="4gQ-pQ-aHm" secondAttribute="leading" constant="20" id="ayb-FF-6kb"/>
+                                                <constraint firstItem="m34-Du-gNc" firstAttribute="top" secondItem="4gQ-pQ-aHm" secondAttribute="top" constant="11" id="hSo-cb-Efn"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="coronaid" destination="fZg-Ee-zzz" id="7gD-zT-U9U"/>
+                                            <outlet property="rssi" destination="m34-Du-gNc" id="BUh-zw-IHh"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

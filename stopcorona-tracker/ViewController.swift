@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import CoreLocation
 
 struct ScannedPeripheral {
     var name: String
@@ -20,21 +21,20 @@ extension Data {
     }
 }
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var peripherals: [ScannedPeripheral] = [ScannedPeripheral]() //model
-    var cbManager: CBCentralManager?
-    var tracker: Tracker?
+    let tracker: Tracker = Tracker()
+    let locationManager: CLLocationManager = CLLocationManager()
+    var location: CLLocation = CLLocation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        tracker = Tracker()
-        
-        tracker?.startTracking { coronaid, rssi in
+       
+        tracker.startTracking { coronaid, rssi in
             let scanned = ScannedPeripheral(name: coronaid, rssi: rssi)
             if let index = self.peripherals.firstIndex(where: { $0.name == scanned.name} ) {
                 self.peripherals[index].rssi = scanned.rssi
@@ -46,6 +46,10 @@ class ViewController: UIViewController, UITableViewDataSource {
             self.peripherals.append(scanned) //add filtering due to continuios scanning
             self.tableView.reloadData()
         }
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
     }
     
     // Mark: UITableViewDataSource
@@ -55,12 +59,31 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
         
-        cell.textLabel?.text = peripherals[indexPath.row].name
-        cell.detailTextLabel?.text = "\(peripherals[indexPath.row].rssi)"
+        cell.coronaid.text = peripherals[indexPath.row].name
+        cell.rssi.text = "\(peripherals[indexPath.row].rssi)"
         
         return cell
+    }
+    
+    // Mark: CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let lastLocation = locations.last {
+            print(lastLocation)
+            
+            location = lastLocation
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let error = error as? CLError, error.code == .denied {
+           // Location updates are not authorized.
+           manager.stopUpdatingLocation()
+           return
+        }
+        
+        print("OOOO CLLocation error")
     }
 }
 

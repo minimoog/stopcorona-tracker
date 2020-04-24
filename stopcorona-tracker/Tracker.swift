@@ -36,15 +36,14 @@ class Tracker: NSObject, CBCentralManagerDelegate {
         case .poweredOn:
             print("BLE powered on")
             
-            cbManager?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
+            //cbManager?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
             
-            /*
+            
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                 self.cbManager?.stopScan()
              
-                self.cbManager?.scanForPeripherals(withServices: [self.cbuuid], options: nil)ѐѐѐѐ
+                self.cbManager?.scanForPeripherals(withServices: nil, options: nil)
             }
-            */
             
         case .resetting:
             print("BLE resetting")
